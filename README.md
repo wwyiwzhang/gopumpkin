@@ -8,3 +8,4 @@ Small examples on different Golang topics
 - struct & interface
 - goroutine
 - testing
+- web application
