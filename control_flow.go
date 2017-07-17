@@ -76,4 +76,22 @@ func main() {
   for ind, val := range newArray3 {
     fmt.Println("The ind and value is", ind, val)
   }
+
+  // map key value
+  // define a key value map with key as string and value as integer
+  newMap := make(map[string] int)
+  // insert some key value pairs
+  newMap["first"] = 1
+  newMap["second"] = 2
+  newMap["third"] = 3
+  fmt.Println("The key value map is", newMap)
+  // remove some key value pairs
+  delete(newMap, "third")
+  fmt.Println("The key value map is", newMap)
+  // add some key value pairs
+  newMap["third"] = 3
+  fmt.Println("The key value map is", newMap)
+  // change the value for some key
+  newMap["third"] = 4
+  fmt.Println("The key value map is", newMap)
 }
