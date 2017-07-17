@@ -3,9 +3,10 @@ Small examples on different Golang topics
 
 ## Plan to cover:
 - data types
-- functions
 - control flows
+- functions
 - struct & interface
-- goroutine
-- testing
+- goroutine & channel
+- reflection
+- unit test
 - web application
