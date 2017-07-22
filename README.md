@@ -8,5 +8,7 @@ Small examples on different Golang topics
 - struct & interface
 - goroutine & channel
 - reflection
-- unit test
+- test
+* unit test
+* performance test
 - web application
