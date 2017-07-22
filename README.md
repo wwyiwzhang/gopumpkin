@@ -9,6 +9,6 @@ Small examples on different Golang topics
 - goroutine & channel
 - reflection
 - test
-* unit test
-* performance test
+  * unit test
+  * performance test
 - web application
