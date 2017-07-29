@@ -7,6 +7,7 @@ Small examples on different Golang topics
 - functions
 - struct & interface
 - goroutine & channel
+- file I/O & logging
 - reflection
 - test
   * unit test
