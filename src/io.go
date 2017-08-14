@@ -14,7 +14,7 @@ func handleError(err error) {
 }
 
 func main() {
-	// read file
+	//read file
 	file_a, err := ioutil.ReadFile("some file path")
 	handleError(err)
 	fmt.Printf("%s\n", string(file_a))
@@ -28,4 +28,19 @@ func main() {
 	file_b.Close()
 
 	// write file
+	numbers := []byte("1\n2\n3\n4\n5")
+	file_c, err := os.Create("some file path")
+	handleError(err)
+
+	byte_info, err := file_c.Write(numbers)
+	handleError(err)
+	fmt.Printf("number of byte written: %d\n", byte_info)
+
+	file_c.Close()
+
+	file_d, err := ioutil.ReadFile("some file path")
+	handleError(err)
+
+	fmt.Println("data is:\n", string(file_d))
+
 }
