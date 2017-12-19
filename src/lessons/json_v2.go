@@ -33,14 +33,15 @@ func Request(url string) (string, error) {
 	return string(body), nil
 }
 
-func ParseJson(data string, mapper interface{}) ([]interface {}) {
+func ParseJson(data string, mapper Jsondata) ([]Recipe) {
 	err := json.Unmarshal([]byte(data), &mapper)
 	if(err != nil) {
 		panic(err)
 	}
-	result := mapper.(map[string]interface{})["results"]
+	fmt.Println(mapper)
+	result := mapper.Results
 	fmt.Println(result)
-	return result.([]interface{})
+	return result
 }
 
 func main() {
@@ -49,17 +50,14 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	mapper := map[string]interface{}{}
+	var mapper Jsondata
 	parsed := ParseJson(data, mapper)
+	// fmt.Println(parsed)
 	for i := range parsed {
 		// needs to do a type assertion here
-		recipe_mapper, ok := parsed[i].(map[string]interface{})
-		if ok {
-			fmt.Println(recipe_mapper["title"])
-			fmt.Println(recipe_mapper["ingredients"])
-			fmt.Println(recipe_mapper["href"])
-		} else {
-			fmt.Println("Failed to type assert item num %v", i+1)
-		}
+		recipe_mapper := parsed[i]
+		fmt.Println(recipe_mapper.Title)
+		fmt.Println(recipe_mapper.Ingredients)
+		fmt.Println(recipe_mapper.Href)
 	}
 }
