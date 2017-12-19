@@ -8,11 +8,6 @@ import (
 	"reflect"
 )
 
-type Recipe struct {
-	title string `json:"title"`
-	ingredients string `json:"ingredients"`
-}
-
 // get some data from recipe puppy
 
 func Request(url string) (string, error) {
@@ -42,10 +37,13 @@ func main() {
 	fmt.Println(reflect.TypeOf(parsed))
 	for i := range parsed {
 		// needs to do a type assertion here
-		recipe_mapper := parsed[i].(map[string]interface{})
-		fmt.Println(recipe_mapper["title"])
-		fmt.Println(recipe_mapper["ingredients"])
-		fmt.Println(recipe_mapper["href"])
+		recipe_mapper, ok := parsed[i].(map[string]interface{})
+		if ok {
+			fmt.Println(recipe_mapper["title"])
+			fmt.Println(recipe_mapper["ingredients"])
+			fmt.Println(recipe_mapper["href"])
+		} else {
+			fmt.Println("Failed to type assert item num %v", i+1)
+		}
 	}
 }
-
