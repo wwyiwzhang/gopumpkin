@@ -16,10 +16,15 @@ var firstname = flag.String("firstname", "", "first name")
 var lastname = flag.String("lastname", "", "last name")
 var order = flag.String("order", "", "order")
 
-type Response struct {
+type Order struct {
 	Firstname string `json:"firstname"`
 	Lastname string `json:"lastname"`
 	Order string `json:"order"`
+}
+
+type Response struct {
+	Statuscode int `json:"statuscode"`
+	Message string `json:"message"`
 }
 
 func main() {
@@ -31,31 +36,17 @@ func main() {
 	}
 	defer conn.Close()
 	fmt.Println("Connecting to " + *host + ":" + *port)
-	done := make(chan string)
-	go sendData(conn, done)
-	// go getResponse(conn, done)
-	fmt.Println(<-done)
-	// fmt.Println(<-done)
+	sendDataNgetResponse(conn)
+	conn.Close()
 }
 
-func getResponse(conn net.Conn, done chan string) {
-	statuscode, err_r := ioutil.ReadAll(conn)
-	if err_r != nil {
-		fmt.Println("error reading: ", err_r)
-		panic(err_r)
-	}
-	i, _ := strconv.Atoi(string(statuscode))
-	fmt.Println("Status code from server is: ", i)
-	done <- "Read"
-}
-
-func sendData(conn net.Conn, done chan string) {
-	r := Response{
+func sendDataNgetResponse(conn net.Conn) {
+	order := Order{
 		Firstname: *firstname,
 		Lastname: *lastname,
 		Order: *order,
 	}
-	b, errs := json.Marshal(r)
+	b, errs := json.Marshal(order)
 	if errs != nil {
 		fmt.Println("Failed to serialize data")
 		return
@@ -66,6 +57,23 @@ func sendData(conn net.Conn, done chan string) {
 		return
 	}
 	fmt.Println("Succeeded to make a request to server with data: ", string(b))
-	done <- "Sent"
+
+	conn.(*net.TCPConn).CloseWrite()
+
+	message, err_r := ioutil.ReadAll(conn)
+
+	var r Response
+
+	json.Unmarshal(message, &r)
+
+	if err_r != nil {
+		fmt.Println("error reading: ", err_r)	
+	} else {
+		if r.Statuscode == 200 {
+			fmt.Println("Server succeeded to respond to the request with status code: ", strconv.Itoa(r.Statuscode))
+		} else {
+			fmt.Println("Server failed to respond to the request with status code: ", strconv.Itoa(r.Statuscode))
+		}
+	}
 }
 
