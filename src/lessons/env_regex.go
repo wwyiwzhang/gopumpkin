@@ -27,7 +27,7 @@ func main() {
 	}
 	fmt.Println("\n")
 	// regex
-	regexstring := "hello World"
+	regexstring := "hello World bigworld"
 
 	// match string 
 	r, _ := regexp.Compile("e[a-z]+o")
@@ -40,4 +40,8 @@ func main() {
 	fmt.Println(ri.FindString(regexstring))	
 	fmt.Println(ri.FindStringIndex(regexstring))	
 	// get all matches
+
+	ra, _ := regexp.Compile("(?i)w[a-z]+d")
+	fmt.Println(ra.FindAllString(regexstring, 2)) // return as []string
+	fmt.Println(reflect.TypeOf(ra.FindAllString(regexstring, 2)))
 }
