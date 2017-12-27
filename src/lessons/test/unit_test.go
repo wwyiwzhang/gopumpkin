@@ -1,12 +1,6 @@
-package test
+package unitest
 
-import (
-	"testing"
-)
-
-func EvenNumber(a int) bool{
-	return a%2 == 0
-}
+import "testing"
 
 func Test_EvenNumber(t *testing.T) {
 	sample := []int{1, 2, 3, 4, 5}
@@ -23,4 +17,10 @@ func Test_EvenNumber(t *testing.T) {
 		}
 	}
 	t.Log("Passed!")
+}
+
+func Benchmark_EvenNumber(b *testing.B) {
+	for i:=0; i < b.N; i++ {
+		EvenNumber(i)
+	}
 }
