@@ -8,8 +8,10 @@ Small examples on different Golang topics
 - struct & interface
 - goroutine & channel
 - file I/O & logging
+- serialize and deserialize
 - reflection
 - test
   * unit test
   * performance test
+- tcp client and server
 - web application

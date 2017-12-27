@@ -3,26 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 	"io/ioutil"
-	// "reflect"
+	"net/http"
 )
 
 // get some data from recipe puppy
-type Recipe struct {
-	Title string `json:"title"`
-	Href string `json:"href"`
-	Ingredients string `json:"ingredients"`
-	Thumbnail string `json:"thumbnail"`
-}
-
-type Jsondata struct {
-	Title string `json:"title"`
-	Version float64 `json:"version"`
-	Href string `json:"href"`
-	Results []Recipe `json:"results"`
-}
-
 func Request(url string) (string, error) {
 	response, err := http.Get(url)
 	if err != nil {

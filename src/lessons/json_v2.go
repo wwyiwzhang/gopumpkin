@@ -3,9 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 	"io/ioutil"
-	// "reflect"
+	"net/http"
 )
 
 // get some data from recipe puppy
