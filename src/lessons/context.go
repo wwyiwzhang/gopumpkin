@@ -1,6 +1,6 @@
 /*
-The context library can be used for stop all the dependent actions from a single call and
-free up resources in a timely manner
+The context library can be used for exiting all goroutines cleanly
+when a request is cancelled and free up resources in a timely manner
 This exercise is mimmicking pizza ordering
 If receives cancellation request, all the remaining dependent goroutines must return
 */
