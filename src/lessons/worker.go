@@ -2,7 +2,7 @@
 This is a simple example of distributing work to multiple workers (goroutines)
 Each worker is a struct with an id and an exclusive channel
 In the main function, first create five workers (goroutines) and start them then
-ased on the calculated mod, each Work is sent to the corresponding Worker to process
+based on the calculated mod, each Work is sent to the corresponding Worker to process
 */
 
 package main
