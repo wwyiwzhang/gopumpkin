@@ -16,7 +16,7 @@ import (
 func makeDough(ctx context.Context, mc chan int, bc chan int) {
 	select {
 	case <-ctx.Done():
-		fmt.Println("Order canceled!")
+		fmt.Println("Order canceled! Stop making dough")
 	case order := <-mc:
 		fmt.Printf("Making dough for order #%d\n", order)
 		time.Sleep(100 * time.Millisecond)
@@ -28,7 +28,7 @@ func makeDough(ctx context.Context, mc chan int, bc chan int) {
 func bakePizza(ctx context.Context, mc chan int, bc chan int) {
 	select {
 	case <-ctx.Done():
-		fmt.Println("Order canceled!")
+		fmt.Println("Order canceled! Stop baking")
 	case order := <-bc:
 		fmt.Printf("Baking pizza for order #%d\n", order)
 		time.Sleep(100 * time.Millisecond)
