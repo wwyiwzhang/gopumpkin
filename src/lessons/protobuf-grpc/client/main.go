@@ -18,7 +18,7 @@ func main() {
 		os.Exit(1)
 	}
 	if flag.NArg() > 1 {
-		fmt.Fprintf(os.Stderr, "too many arguments: expected 1, found %d", flag.NArg())
+		fmt.Fprintf(os.Stderr, "too many arguments: expected 1, found %d\n", flag.NArg())
 		os.Exit(1)
 	}
 
