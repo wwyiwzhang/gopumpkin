@@ -18,7 +18,8 @@ func main() {
 		os.Exit(1)
 	}
 	if flag.NArg() > 1 {
-		fmt.Fprintln(os.Stderr, "too many arguments: expected 1, found %d", flag.NArg())
+		fmt.Fprintf(os.Stderr, "too many arguments: expected 1, found %d", flag.NArg())
+		os.Exit(1)
 	}
 
 	conn, err := grpc.Dial(":8080", grpc.WithInsecure())
