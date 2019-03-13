@@ -56,10 +56,11 @@ func main() {
 
 	go func() {
 		for _, w := range pool {
-			fmt.Printf("closing channel for worker: %d\n", w.id)
+			fmt.Printf("closing channel for worker: #%d\n", w.id)
 			close(w.wc)
 		}
 	}()
 
+	// Use Wait() function to block the main goroutine
 	wg.Wait()
 }
