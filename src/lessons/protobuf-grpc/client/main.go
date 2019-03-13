@@ -14,7 +14,7 @@ import (
 func main() {
 	flag.Parse()
 	if flag.NArg() < 1 {
-		fmt.Fprintln(os.Stderr, "not enough argument!")
+		fmt.Fprintf(os.Stderr, "not enough argument: expected 1, found %d\n", flag.NArg())
 		os.Exit(1)
 	}
 	if flag.NArg() > 1 {
@@ -38,5 +38,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("weather inquire failed, %v", err)
 	}
-	log.Printf("Weather report for %s: %s", weatherInquiry.Date, wr.Weather)
+	log.Printf("weather report for %s: %s", weatherInquiry.Date, wr.Weather)
 }
