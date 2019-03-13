@@ -16,5 +16,6 @@ Small examples on different Golang topics
   * unit test
   * performance test
 - tcp client and server
+- protobuf & gRPC
 - web application framework
   * Gin

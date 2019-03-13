@@ -10,7 +10,6 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 type Worker struct {
@@ -29,18 +28,19 @@ func newWorker(wid int) *Worker {
 
 func (w *Worker) Do(wg *sync.WaitGroup) {
 	for {
-		select {
-		case <-time.After(2 * time.Second):
+		wrk, ok := <-w.wc
+		if !ok {
 			wg.Done()
-		case wrk := <-w.wc:
-			fmt.Printf("Worker: #%d handles work: %v\n", w.id, wrk)
+			break
 		}
+		fmt.Printf("Worker: #%d is processing work: %v\n", w.id, wrk)
 	}
 }
 
 func main() {
 	var wg sync.WaitGroup
 	pool := []*Worker{}
+
 	for i := range []int{1, 2, 3, 4, 5} {
 		worker := newWorker(i)
 		pool = append(pool, worker)
@@ -54,5 +54,13 @@ func main() {
 		pool[mod].wc <- w
 	}
 
+	go func() {
+		for _, w := range pool {
+			fmt.Printf("closing channel for worker: #%d\n", w.id)
+			close(w.wc)
+		}
+	}()
+
+	// Use Wait() function to block the main goroutine
 	wg.Wait()
 }

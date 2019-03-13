@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package weather;
+
+message WeatherInquiry {
+    string date = 1;
+}
+
+message WeatherReport {
+    string date = 1;
+    string weather = 2;
+}
+
+service Weathers {
+    rpc Inquire(WeatherInquiry) returns(WeatherReport) {}
+}
