@@ -41,6 +41,7 @@ func main() {
 	}()
 	wg.Add(2)
 	go func() {
+		defer wg.Done()
 		for c != nil {
 			_, ok := <-c
 			if !ok {
