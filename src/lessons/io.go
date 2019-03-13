@@ -1,46 +1,67 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
+	"strings"
+	"sync"
 )
 
-func handleError(err error) {
-	if err != nil {
-		fmt.Print("File Rreading error!")
-		fmt.Print(err)
-	}
-}
-
 func main() {
-	//read file
-	file_a, err := ioutil.ReadFile("some file path")
-	handleError(err)
-	fmt.Printf("%s\n", string(file_a))
 
-	file_b, err := os.Open("some file path")
-	handleError(err)
-	b1 := make([]byte, 5)
-	data, err := file_b.Read(b1)
-	handleError(err)
-	fmt.Printf("%d bytes are:", data, string(b1))
-	file_b.Close()
+	// TeeReader example
+	// Takes a reader and writer and return a reader
+	// it will output to writer for whatever it reads in
+	fi, err := os.Stdin.Stat()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "could not stat standard input: %v", err)
+	}
+	if fi.Mode()&os.ModeNamedPipe == 0 {
+		fmt.Fprintln(os.Stderr, "reading data from terminal, not implemented!")
+		os.Exit(1)
+	} else {
+		fmt.Println("reading data from pipe")
+	}
+	s := bufio.NewScanner(io.TeeReader(os.Stdin, os.Stdout))
+	c := make(chan string)
 
-	// write file
-	numbers := []byte("1\n2\n3\n4\n5")
-	file_c, err := os.Create("some file path")
-	handleError(err)
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer close(c)
+		defer wg.Done()
+		for s.Scan() {
+			c <- s.Text()
+		}
+		if err := s.Err(); err != nil {
+			fmt.Fprintf(os.Stderr, "failed to read from standard input: %v", err)
+		}
+	}()
+	wg.Add(2)
+	go func() {
+		for c != nil {
+			_, ok := <-c
+			if !ok {
+				c = nil
+			}
+		}
+	}()
+	wg.Wait()
 
-	byte_info, err := file_c.Write(numbers)
-	handleError(err)
-	fmt.Printf("number of byte written: %d\n", byte_info)
-
-	file_c.Close()
-
-	file_d, err := ioutil.ReadFile("some file path")
-	handleError(err)
-
-	fmt.Println("data is:\n", string(file_d))
-
+	// MultiWriter example
+	// Writes to multiple writers: Stdout and a text file
+	d := strings.NewReader("hello world, learning io library is fun\n")
+	f, err := os.Create("output.txt")
+	// defer f.Sync()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "could not open file for writing: %v", err)
+		os.Exit(1)
+	}
+	writers := io.MultiWriter(os.Stdout, f)
+	_, err = io.Copy(writers, d)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "could not copy from reader to writers: %v", err)
+	}
 }
