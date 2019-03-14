@@ -11,8 +11,7 @@ import (
 
 func main() {
 
-	// TeeReader example
-	// Takes a reader and writer and return a reader
+	// TeeReader example: takes a reader and writer and return a reader
 	// it will output to writer for whatever it reads in
 	fi, err := os.Stdin.Stat()
 	if err != nil {
@@ -51,9 +50,8 @@ func main() {
 	}()
 	wg.Wait()
 
-	// MultiWriter example
-	// Writes to multiple writers: Stdout and a text file
-	d := strings.NewReader("hello world, learning io library is fun\n")
+	// MultiWriter example: writes to multiple writers: Stdout and a text file
+	d := strings.NewReader("hello world, learning io library is fun!\n")
 	f, err := os.Create("output.txt")
 	// defer f.Sync()
 	if err != nil {
