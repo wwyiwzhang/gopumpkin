@@ -58,7 +58,7 @@ func (y *yelpHTTPClient) Get(url string, kwargs map[string]string) (HTTPResponse
 	}
 	fullquery := strings.Join(query, "&")
 	fullURL := fmt.Sprintf("%s?%s", url, fullquery)
-
+	fmt.Println(fullURL)
 	req, err := http.NewRequest("GET", fullURL, nil)
 	req.Header.Add("Authorization", "Bearer "+y.token)
 

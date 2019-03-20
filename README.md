@@ -19,3 +19,6 @@ Small examples on different Golang topics
 - protobuf & gRPC
 - web application framework
   * Gin
+
+## Mini projects:
+- Yelp API

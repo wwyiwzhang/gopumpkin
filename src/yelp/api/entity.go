@@ -33,11 +33,16 @@ func (b *Businesses) ConvertItem() [][]string {
 			fmt.Sprintf("%f", i.Rating),
 			i.Price,
 		}
+		sub = append(sub, i.getCategory()...)
 		result = append(result, sub)
 	}
 	return result
 }
 
-// func (b *Businesses) GetBusinessItem() []BusinessItem {
-// 	return b.Item
-// }
+func (bi *BusinessItem) getCategory() []string {
+	c := []string{}
+	for _, i := range bi.Categories {
+		c = append(c, i.Title)
+	}
+	return c
+}

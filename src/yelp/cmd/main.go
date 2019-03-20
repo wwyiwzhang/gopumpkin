@@ -16,8 +16,8 @@ func main() {
 
 	businessType := flag.String("t", "restaurants", "business type")
 	location := flag.String("l", "sf", "business location")
-	offSet := flag.Int("o", 20, "offset value")
-	limit := flag.Int("m", 20, "query limit")
+	offSet := flag.Int("o", 0, "offset value")
+	limit := flag.Int("m", 20, "query limit with max value of 50")
 	flag.Parse()
 
 	client := yelper.NewYelpHTTPClient()
@@ -26,14 +26,13 @@ func main() {
 	resp, err := client.Get(yelpBusinessURL, map[string]string{
 		"term":     *businessType,
 		"location": *location,
-		"limit":    fmt.Sprintf("%d", *offSet),
-		"offset":   fmt.Sprintf("%d", *limit),
+		"limit":    fmt.Sprintf("%d", *limit),
+		"offset":   fmt.Sprintf("%d", *offSet),
 	})
 	if err != nil {
 		log.Fatalf("program failed to get from Yelp developer API, exiting...\n")
 	}
-	var business yelper.Businesses
-	b, err := resp.Decode(business)
+	b, err := resp.Decode(yelper.Businesses{})
 	if err != nil {
 		log.Fatalf("program failed to decode businesses, %v\n", err)
 	}
@@ -48,5 +47,4 @@ func main() {
 	if err != nil {
 		log.Fatalf("program faild to save businesses to CSV, %v\n", err)
 	}
-
 }
