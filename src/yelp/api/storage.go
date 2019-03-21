@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-type Writer interface {
+type WriterInterface interface {
 	Write(v interface{}) error
 }
 
@@ -14,10 +14,14 @@ type csvWriter struct {
 	Writer *csv.Writer
 }
 
-func NewCSVWriter(f *os.File) Writer {
+func newCSVWriter(f *os.File) *csvWriter {
 	return &csvWriter{
 		Writer: csv.NewWriter(f),
 	}
+}
+
+func Writer(f *os.File) WriterInterface {
+	return newCSVWriter(f)
 }
 
 func CreateORExists(FilePath string) (*os.File, error) {

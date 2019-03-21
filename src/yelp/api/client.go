@@ -22,11 +22,15 @@ type yelpHTTPClient struct {
 
 var token string
 
-func NewYelpHTTPClient() HTTPClient {
+func newYelpHTTPClient() *yelpHTTPClient {
 	return &yelpHTTPClient{
 		token:  token,
 		client: &http.Client{},
 	}
+}
+
+func NewClient() HTTPClient {
+	return newYelpHTTPClient()
 }
 
 type HTTPResponse interface {
