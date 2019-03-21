@@ -39,7 +39,7 @@ func main() {
 	cb := b.ConvertItem()
 	f, err := yelper.CreateORExists(*fileName)
 	if err != nil {
-		log.Fatalf("could not open file to save data, %v\n", err)
+		log.Fatalf("could not open file: %s to save data, %v\n", *fileName, err)
 	}
 	err = yelper.Writer(f).Write(cb)
 	if err != nil {
