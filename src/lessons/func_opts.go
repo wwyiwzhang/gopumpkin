@@ -15,7 +15,9 @@ type Client struct {
 	token  string
 }
 
-func NewClient(n string, options ...func(*Client)) *Client {
+type Option func(*Client)
+
+func NewClient(n string, options ...Option) *Client {
 	c := &Client{
 		name:   n,
 		client: &http.Client{},
@@ -26,8 +28,6 @@ func NewClient(n string, options ...func(*Client)) *Client {
 	}
 	return c
 }
-
-type Option func(*Client)
 
 func newLogger(t string) Option {
 	return func(c *Client) {
