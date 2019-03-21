@@ -20,8 +20,13 @@ func newCSVWriter(f *os.File) *csvWriter {
 	}
 }
 
-func Writer(f *os.File) WriterInterface {
-	return newCSVWriter(f)
+func Writer(v interface{}) WriterInterface {
+	switch f := v.(type) {
+	case *os.File:
+		return newCSVWriter(f)
+	default:
+		return nil
+	}
 }
 
 func CreateORExists(FilePath string) (*os.File, error) {

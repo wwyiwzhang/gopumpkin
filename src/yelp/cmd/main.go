@@ -18,6 +18,7 @@ func main() {
 	location := flag.String("l", "sf", "business location")
 	offSet := flag.Int("o", 0, "offset value")
 	limit := flag.Int("m", 20, "query limit with max value of 50")
+	fileName := flag.String("f", "", "name of the file to save records")
 	flag.Parse()
 
 	resp, err := yelper.Client().Get(
@@ -36,7 +37,7 @@ func main() {
 	}
 	// save business to CSV
 	cb := b.ConvertItem()
-	f, err := yelper.CreateORExists("yelp.csv")
+	f, err := yelper.CreateORExists(*fileName)
 	if err != nil {
 		log.Fatalf("could not open file to save data, %v\n", err)
 	}
