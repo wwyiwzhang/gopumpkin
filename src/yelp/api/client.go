@@ -29,7 +29,7 @@ func newYelpHTTPClient() *yelpHTTPClient {
 	}
 }
 
-func NewClient() HTTPClient {
+func Client() HTTPClient {
 	return newYelpHTTPClient()
 }
 

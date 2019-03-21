@@ -20,7 +20,7 @@ func main() {
 	limit := flag.Int("m", 20, "query limit with max value of 50")
 	flag.Parse()
 
-	resp, err := yelper.NewClient().Get(
+	resp, err := yelper.Client().Get(
 		yelpBusinessURL, map[string]string{
 			"term":     *businessType,
 			"location": *location,
