@@ -15,7 +15,7 @@ func sendRequest(ctx context.Context, id int) {
 		return
 	default:
 		var jsonStr = []byte(fmt.Sprintf(`{"id": %d}`, id))
-		req, err := http.NewRequest("POST", "http://localhost:8000", bytes.NewBuffer(jsonStr))
+		req, err := http.NewRequest(http.MethodPost, "http://localhost:8000", bytes.NewBuffer(jsonStr))
 		client := &http.Client{}
 		_, err = client.Do(req)
 		if err != nil {
