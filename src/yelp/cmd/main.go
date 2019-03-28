@@ -41,7 +41,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("could not open file: %s to save data, %v\n", *fileName, err)
 	}
-	err = yelper.Writer(f).Write(cb)
+	w := yelper.NewCSVWriter(f)
+	w.WriteAll(cb)
 	if err != nil {
 		log.Fatalf("program faild to save businesses to CSV, %v\n", err)
 	}
