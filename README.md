@@ -1,3 +1,4 @@
+
 # gopumpkin
 Small examples on different Golang topics
 
@@ -7,8 +8,10 @@ Small examples on different Golang topics
 - context
 - functions
 - struct & interface
-- goroutine & channel
+- concurrency
     - worker
+    - semaphore
+    - sync
 - file I/O & logging
 - serialize and deserialize
 - reflection
