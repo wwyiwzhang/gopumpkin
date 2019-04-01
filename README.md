@@ -9,6 +9,7 @@ Small examples on different Golang topics
 - functions
 - struct & interface
 - concurrency
+    - goroutine & channel
     - worker
     - semaphore
     - sync
