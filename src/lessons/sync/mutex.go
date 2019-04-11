@@ -43,10 +43,6 @@ func (uc *UserCounter) Count(wg *sync.WaitGroup, userList []string, times int) m
 			go func(n string) {
 				defer wg.Done()
 				uc.Visit(n)
-			}(name)
-			wg.Add(1)
-			go func(n string) {
-				defer wg.Done()
 				fmt.Printf("%s visited: %d times\n", n, uc.VisitedCount(n))
 			}(name)
 		}
@@ -57,9 +53,9 @@ func (uc *UserCounter) Count(wg *sync.WaitGroup, userList []string, times int) m
 }
 
 func main() {
-	wg := &sync.WaitGroup{}
+	var wg sync.WaitGroup
 	newCounter := NewUserCounter()
-	fc := newCounter.Count(wg, []string{
+	fc := newCounter.Count(&wg, []string{
 		"user1",
 		"user2",
 		"user3",
