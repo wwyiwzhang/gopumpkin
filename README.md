@@ -13,6 +13,7 @@ Small examples on different Golang topics
     - worker
     - semaphore
     - sync
+        - RWMutex
 - file I/O & logging
 - serialize and deserialize
 - reflection
