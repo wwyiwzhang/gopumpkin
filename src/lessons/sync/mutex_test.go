@@ -7,7 +7,7 @@ import (
 )
 
 func Test_Count(t *testing.T) {
-	wg := &sync.WaitGroup{}
+	var wg sync.WaitGroup
 	testCases := []struct {
 		userList []string
 		times    int
@@ -34,7 +34,7 @@ func Test_Count(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		newCounter := NewUserCounter()
-		actual := newCounter.Count(wg, tc.userList, tc.times)
+		actual := newCounter.Count(&wg, tc.userList, tc.times)
 		if !reflect.DeepEqual(actual, tc.expected) {
 			t.Errorf("expected: %v, got: %v", tc.expected, actual)
 		}
